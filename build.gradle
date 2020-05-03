@@ -1,4 +1,8 @@
-apply plugin: 'jetty'
+plugins {
+  id 'war'
+  id 'java'
+  id 'org.gretty' version '2.1.0'
+}
 
 configurations {
   provided
@@ -7,8 +11,16 @@ configurations {
 dependencies {
   provided 'javax.servlet:servlet-api:2.4'
   compile configurations.provided
+  testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+  testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
 }
 
 repositories {
   mavenCentral()
 }
+
+test {
+  useJUnitPlatform()
+}
+
+tasks.test.dependsOn("war")
